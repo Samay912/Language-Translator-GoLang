@@ -5,7 +5,7 @@ function App() {
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isReceiving, setIsReceiving] = useState(false);
-
+  const [isSending, setIsSending] = useState('Enter in any language...');
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       const text = event.target.value.trim();
@@ -15,14 +15,15 @@ function App() {
         socket.onopen = () => {
           if (socket.readyState === 1) {
             socket.send(text);
-            setInputValue('receiving...');
+            setInputValue('');
+            setIsSending('Sending...');
             setData([])
           }
         };
         socket.onmessage = (event) => {
           setData((prevData) => [...prevData, event.data]);
           setIsReceiving(false);
-          setInputValue('Enter in any language...');
+          setIsSending('Enter in any language...');
         };
       }
     }
@@ -35,7 +36,7 @@ function App() {
       <input
         type="text"
         id="text-input"
-        placeholder="Enter in any language..."
+        placeholder={isSending}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyPress={handleKeyPress}
