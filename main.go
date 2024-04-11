@@ -18,6 +18,10 @@ func main() {
 
 	http.HandleFunc("/websoc", func(w http.ResponseWriter, r *http.Request) {
 		conn, err := upgrader.Upgrade(w, r, nil)
+		fmt.Printf("Method: %s\n", r.Method)
+		fmt.Printf("URL: %s\n", r.URL)
+		fmt.Printf("Headers: %s\n", r.Header)
+
 		if err != nil {
 			log.Print("upgrade:", err)
 		}

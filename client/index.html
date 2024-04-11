@@ -51,7 +51,7 @@
       socket.addEventListener("open", function (event) {
         document.getElementById("connect").innerText = "Connected to server";
       });
-
+      
       socket.addEventListener("message", function (event) {
         var body = document.getElementById("body");
         var list = document.createElement("li");
@@ -59,6 +59,7 @@
         list.innerHTML = event.data;
 
         body.appendChild(list);
+       
       });
 
       document
@@ -69,6 +70,7 @@
             if (text !== "") {
               socket.send(text);
               event.target.value = "";
+              // location.reload();
             }
           }
           document
