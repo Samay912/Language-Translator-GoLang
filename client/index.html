@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web server</title>
+    <style>
+      #connect {
+        font-size: 30px;
+        font-family: Poppins;
+      }
+      #body {
+        font-family: Poppins;
+      }
+      #text-input {
+        margin-top: 20px;
+        padding: 5px;
+        font-size: 16px;
+        width: 300px;
+      }
+      #main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      #reload-btn {
+        margin-top: 20px;
+        padding: 10px 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <p id="connect">Not connected to server</p>
+      <input
+        type="text"
+        id="text-input"
+        placeholder="Enter text to translate"
+      />
+      <ol id="body"></ol>
+      <button id="reload-btn">Reload Page</button>
+    </div>
+    <script>
+      const socket = new WebSocket("ws://localhost:8050/websoc");
+
+      socket.addEventListener("open", function (event) {
+        document.getElementById("connect").innerText = "Connected to server";
+      });
+
+      socket.addEventListener("message", function (event) {
+        var body = document.getElementById("body");
+        var list = document.createElement("li");
+
+        list.innerHTML = event.data;
+
+        body.appendChild(list);
+      });
+
+      document
+        .getElementById("text-input")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            var text = event.target.value.trim();
+            if (text !== "") {
+              socket.send(text);
+              event.target.value = "";
+            }
+          }
+          document
+            .getElementById("reload-btn")
+            .addEventListener("click", function () {
+              location.reload();
+            });
+        });
+    </script>
+  </body>
+</html>
