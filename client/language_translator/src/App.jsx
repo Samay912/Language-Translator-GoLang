@@ -43,7 +43,7 @@ function App() {
         className="border-black border-2 w-1/3 h-10 p-2 mt-2 text-lg"
         disabled={isReceiving}
       />
-      <div className="max-h-[50vh] overflow-auto mt-4">
+      <div className="max-h-[50vh] min-w-10 overflow-auto mt-4">
         <List data={data} className=""/>
       </div>
       

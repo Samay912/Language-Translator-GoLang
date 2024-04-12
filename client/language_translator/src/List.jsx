@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 
 function List({ data }) {
     return (
-        <ol>
+        <ol >
             {data.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li className=" w-[30vw]" key={index}>{item}</li>
             ))}
         </ol>
     );
